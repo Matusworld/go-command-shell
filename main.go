@@ -39,6 +39,23 @@ func main() {
 			continue
 		}
 
+		// type command to check if a command is a shell builtin
+		if strings.HasPrefix(input, "type ") {
+			// Extract the command to check after 'type '
+			commandToCheck := strings.TrimPrefix(input, "type ")
+			switch commandToCheck {
+			case "echo":
+				fmt.Fprintln(os.Stdout, "echo is a shell builtin")
+			case "type":
+				fmt.Fprintln(os.Stdout, "type is a shell builtin")
+			case "exit":
+				fmt.Fprintln(os.Stdout, "exit is a shell builtin")
+			default:
+				fmt.Fprintf(os.Stdout, "%s not found\n", commandToCheck)
+			}
+			continue
+		}
+
 		// Print the error message for invalid command
 		fmt.Fprintf(os.Stderr, "%s: command not found\n", input)
 	}
