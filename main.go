@@ -8,6 +8,10 @@ import (
 )
 
 func main() {
+	// Get the PATH environment variable
+	pathEnv := os.Getenv("PATH")
+	pathDirs := strings.Split(pathEnv, ":")
+
 	for {
 		fmt.Fprint(os.Stdout, "$ ")
 
@@ -51,7 +55,20 @@ func main() {
 			case "exit":
 				fmt.Fprintln(os.Stdout, "exit is a shell builtin")
 			default:
-				fmt.Fprintf(os.Stdout, "%s not found\n", commandToCheck)
+				// Search for the command in the PATH directories
+				found := false
+				for _, dir := range pathDirs {
+					cmdPath := fmt.Sprintf("%s/%s", dir, commandToCheck)
+					_, err := os.Stat(cmdPath)
+					if err == nil {
+						fmt.Printf("%s is %s\n", commandToCheck, cmdPath)
+						found = true
+						break
+					}
+				}
+				if !found {
+					fmt.Printf("%s not found\n", commandToCheck)
+				}
 			}
 			continue
 		}
