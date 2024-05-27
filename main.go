@@ -26,6 +26,11 @@ func main() {
 			continue
 		}
 
+		// Exit 0 command to quit the shell
+		if input == "exit 0" {
+			os.Exit(0)
+		}
+
 		// Print the error message for invalid command
 		fmt.Fprintf(os.Stderr, "%s: command not found\n", input)
 	}
