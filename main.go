@@ -31,6 +31,14 @@ func main() {
 			os.Exit(0)
 		}
 
+		// Check for the 'echo' command
+		if strings.HasPrefix(input, "echo ") {
+			// Extract the text after 'echo '
+			echoText := strings.TrimPrefix(input, "echo ")
+			fmt.Println(echoText)
+			continue
+		}
+
 		// Print the error message for invalid command
 		fmt.Fprintf(os.Stderr, "%s: command not found\n", input)
 	}
