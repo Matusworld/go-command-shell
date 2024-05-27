@@ -60,7 +60,7 @@ This document provides examples of some common command line operations.
   nonexistent not found
   ```
 
-- Run `program_1234` with `alice` as an argument:
+- Run `program` with `joe` as an argument:
 
   ```bash
   $ program Joe
