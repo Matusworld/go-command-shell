@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -11,6 +12,7 @@ func main() {
 	// Get the PATH environment variable
 	pathEnv := os.Getenv("PATH")
 	pathDirs := strings.Split(pathEnv, ":")
+
 
 	for {
 		fmt.Fprint(os.Stdout, "$ ")
@@ -35,7 +37,7 @@ func main() {
 			os.Exit(0)
 		}
 
-		// Check for the 'echo' command
+		// echo command to print the text after 'echo '
 		if strings.HasPrefix(input, "echo ") {
 			// Extract the text after 'echo '
 			echoText := strings.TrimPrefix(input, "echo ")
@@ -49,11 +51,11 @@ func main() {
 			commandToCheck := strings.TrimPrefix(input, "type ")
 			switch commandToCheck {
 			case "echo":
-				fmt.Fprintln(os.Stdout, "echo is a shell builtin")
+				fmt.Println("echo is a shell builtin")
 			case "type":
 				fmt.Fprintln(os.Stdout, "type is a shell builtin")
 			case "exit":
-				fmt.Fprintln(os.Stdout, "exit is a shell builtin")
+				fmt.Println("exit is a shell builtin")
 			default:
 				// Search for the command in the PATH directories
 				found := false
@@ -73,7 +75,16 @@ func main() {
 			continue
 		}
 
-		// Print the error message for invalid command
-		fmt.Fprintf(os.Stderr, "%s: command not found\n", input)
+		// Handle external commands with arguments
+		args := strings.Split(input, " ")
+		cmd := exec.Command(args[0], args[1:]...)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+
+		// Run the command
+		err = cmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s: command not found\n", input)
+		}
 	}
 }
