@@ -24,18 +24,51 @@
 
 ### Usage
 
+```sh
 ./shell.sh
+```
 
-### Example
+# Command Line Examples
 
-$ echo Hello World
-Hello World
-$ type echo
-echo is a shell builtin
-$ type ls
-ls is /bin/ls
-$ type nonexistent
-nonexistent not found
-$ program_1234 alice
-Hello alice! The secret code is 1234.
-$ exit 0
+This document provides examples of some common command line operations.
+
+- Echo a string:
+
+  ```bash
+  $ echo Hello World
+  Hello World
+  ```
+
+- Check if `echo` is a built-in shell command:
+
+  ```bash
+  $ type echo
+  echo is a shell builtin
+  ```
+
+- Check the location of `ls` command:
+
+  ```bash
+  $ type ls
+  ls is /bin/ls
+  ```
+
+- Try to find a nonexistent command:
+
+  ```bash
+  $ type nonexistent
+  nonexistent not found
+  ```
+
+- Run `program_1234` with `alice` as an argument:
+
+  ```bash
+  $ program Joe
+  Hello Joe
+  ```
+
+- Exit the shell with a status of 0:
+
+  ```bash
+  $ exit 0
+  ```
